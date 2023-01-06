@@ -5,13 +5,18 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="test")
-public class Bus implements Serializable {
+@Table(name="reserve")
+public class Reserve implements Serializable {
 	
 
 	private static final long serialVersionUID = 5362437768854142524L;
@@ -31,11 +36,20 @@ public class Bus implements Serializable {
 	@Column(name="goingto")
 	private String goingTo;
 	
+	@ManyToOne
+	@JoinColumn(name="username")
+	private User user;
 	
-	public Bus() {
-		
+
+	
+	public User getUser() {
+		return user;
 	}
 
+	public Reserve() {
+		this.user = new User();
+		
+	}
 	@Override
 	public String toString() {
 		return "Bus [dateLeave=" + dateLeave + ", dateReturn=" + dateReturn + ", leaveFrom=" + leaveFrom + ", goingTo="
@@ -43,16 +57,14 @@ public class Bus implements Serializable {
 	}
 
 
-	public String getLeaveFrom() {
-		return leaveFrom;
-	}
-	public String getGoingTo() {
-		return goingTo;
-	}
-	public Date getDateLeave() {
-		return dateLeave;
-	}
-	public Date getDateReturn() {
-		return dateReturn;
-	}
+
+
+
+	
+
+
+
+	
+	
+
 }

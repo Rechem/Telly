@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class BusController {
@@ -40,6 +41,26 @@ public class BusController {
 
         return "home";
 
+    }
+
+    @RequestMapping("/results")
+    public String leave(Model model, Principal principal) {
+
+        model.addAttribute("bus", new Bus());
+
+        return "results";
+    }
+
+    @RequestMapping(value = "/resultsfrom", method = RequestMethod.GET)
+    public String leaveFrom(@Validated(FormValidationGroup.class) Bus bus, BindingResult result, Model model,
+                            Principal principal) {
+
+        List<Bus> results = busService.getCity(bus.getLeaveFrom(), bus.getGoingTo(), bus.getDateLeave(),
+                bus.getDateReturn());
+        model.addAttribute("results", results);
+        System.out.println(results);
+
+        return "results";
     }
 
 }
