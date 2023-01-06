@@ -32,5 +32,13 @@ public class ReserveDao {
 		session().save(reserve);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Reserve> getReserve(String username) {
+		Criteria crit = session().createCriteria(Reserve.class);
+
+		crit.add(Restrictions.eq("user.username", username));
+
+		return crit.list();
+	}
 
 }
